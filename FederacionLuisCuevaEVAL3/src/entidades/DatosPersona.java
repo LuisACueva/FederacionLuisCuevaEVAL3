@@ -78,6 +78,14 @@ public class DatosPersona {
 		return nombre + " NIF/NIE: " + nifnie.mostrar() + " Tfn:" + telefono + " ("
 				+ fechaNac.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ")";
 	}
+	
+	public String data() {
+		return "" + this.getId() + "|" 
+				+ this.getNombre() + "|" 
+				+ this.getTelefono() + "|"
+				+ this.getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")) 
+				+ this.getNifnie().mostrar();
+	}
 
 	// Examen 2 Ejercicio 3.3
 	// Examen 5 Ejercicio 3
