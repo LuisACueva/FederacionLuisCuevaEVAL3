@@ -201,31 +201,32 @@ public class DatosPersona implements Comparable<DatosPersona>, Iterable<DatosPer
 	}
 	
 	public static void insertarPersonas() {
-//		LinkedList<DatosPersona> tree = new LinkedList<>();
-//		Iterator<DatosPersona> itr = tree.iterator();
-//		
-//		for(DatosPersona m: Datos.PERSONAS) {
-//			tree.add(m);
-//		}
-//		
-//		while(itr.hasNext()) {
-//			Connection conex = ConexBD.establecerConexion();
-//			String consultaInsertStr = "insert into lugares(id, nombre, telefono, nifnie) values (?,?,?,?)";
-//			try {
-//				PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr);
-//				for (DatosPersona l : Datos.PERSONAS) {
-//					pstmt.setLong(1, l.getId());
-//					pstmt.setString(2, l.getNombre());
-//					pstmt.setString(3, l.getTelefono());
-//					pstmt.setString(4, l.getNifnie().mostrar());
-//					int resultadoInsercion = pstmt.executeUpdate();
-//				}
-//
-//			} catch (SQLException e) {
-//				System.out.println("Se ha producido una SQLException:" + e.getMessage());
-//				e.printStackTrace();
-//			}
-//		}
+		LinkedList<DatosPersona> tree = new LinkedList<>();
+		
+		for(DatosPersona m: Datos.PERSONAS) {
+			tree.add(m);
+		}
+		
+		Iterator<DatosPersona> itr = tree.iterator();
+		
+		while(itr.) {
+			Connection conex = ConexBD.establecerConexion();
+			String consultaInsertStr = "insert into lugares(id, nombre, telefono, nifnie) values (?,?,?,?)";
+			try {
+				PreparedStatement pstmt = conex.prepareStatement(consultaInsertStr);
+				for (DatosPersona l : Datos.PERSONAS) {
+					pstmt.setLong(1, l.getId());
+					pstmt.setString(2, l.getNombre());
+					pstmt.setString(3, l.getTelefono());
+					pstmt.setString(4, l.getNifnie().mostrar());
+					int resultadoInsercion = pstmt.executeUpdate();
+				}
+
+			} catch (SQLException e) {
+				System.out.println("Se ha producido una SQLException:" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
