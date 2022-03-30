@@ -14,7 +14,7 @@ import utils.Datos;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class DatosPersona {
+public class DatosPersona implements Comparable<DatosPersona> {
 	private long id;
 	private String nombre;
 	private String telefono;
@@ -178,5 +178,16 @@ public class DatosPersona {
 			System.out.println("Se ha producido una Exception" + e.getMessage());
 		}
 
+	}
+
+	@Override
+	public int compareTo(DatosPersona o) {
+		int ret = 0;
+		if(this.getFechaNac().compareTo(o.getFechaNac()) == 0) {
+			ret = this.getFechaNac().compareTo(o.getFechaNac());
+		}else {
+			ret = this.getNifnie().compareTo(o.getNifnie());
+		}
+		return ret;
 	}
 }
