@@ -1,9 +1,16 @@
 package entidades;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Scanner;
 
+import utils.Datos;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
@@ -141,5 +148,35 @@ public class DatosPersona {
 		ret = new DatosPersona(id, nombre, tfn, fecha, doc);
 		return ret;
 	}
+	
+	public static void exportar() {
+		String path = "atletas_alfabetico.txt";
+		File fichero = new File(path);
+		FileWriter escritor = null;
+		PrintWriter buffer = null;
+		try {
+			try {
+				escritor = new FileWriter(fichero, false);
+				buffer = new PrintWriter(escritor);
+				Arrays.sort(Datos.PERSONAS, new ComparadorAlfabetico());
+				for (DatosPersona m : Datos.PERSONAS) {
+					buffer.println(m.data());
+				}
+			} finally {
+				if (buffer != null) {
+					buffer.close();
+				}
+				if (escritor != null) {
+					escritor.close();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Se ha producido una FileNotFoundException" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Se ha producido una IOException" + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Se ha producido una Exception" + e.getMessage());
+		}
 
+	}
 }
