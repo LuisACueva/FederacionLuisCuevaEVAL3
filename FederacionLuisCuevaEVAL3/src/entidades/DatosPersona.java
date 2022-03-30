@@ -11,19 +11,19 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 import utils.ConexBD;
 import utils.Datos;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class DatosPersona implements Comparable<DatosPersona>, Iterable<DatosPersona> {
+public class DatosPersona implements Comparable<DatosPersona> {
 	private long id;
 	private String nombre;
 	private String telefono;
@@ -201,15 +201,15 @@ public class DatosPersona implements Comparable<DatosPersona>, Iterable<DatosPer
 	}
 	
 	public static void insertarPersonas() {
-		LinkedList<DatosPersona> tree = new LinkedList<>();
+		List<DatosPersona> tree = new LinkedList<>();
 		
 		for(DatosPersona m: Datos.PERSONAS) {
 			tree.add(m);
 		}
 		
-		Iterator<DatosPersona> itr = tree.iterator();
+		Iterator itr = (Iterator) tree.iterator();
 		
-		while(itr.) {
+		while(itr.hasNext()) {
 			Connection conex = ConexBD.establecerConexion();
 			String consultaInsertStr = "insert into lugares(id, nombre, telefono, nifnie) values (?,?,?,?)";
 			try {
@@ -228,12 +228,5 @@ public class DatosPersona implements Comparable<DatosPersona>, Iterable<DatosPer
 			}
 		}
 	}
-
-	@Override
-	public java.util.Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 }
