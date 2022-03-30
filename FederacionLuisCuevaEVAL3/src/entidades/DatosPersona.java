@@ -8,7 +8,11 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.TreeSet;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import utils.Datos;
 import utils.Utilidades;
@@ -189,5 +193,18 @@ public class DatosPersona implements Comparable<DatosPersona> {
 			ret = this.getNifnie().compareTo(o.getNifnie());
 		}
 		return ret;
+	}
+	
+	public static void insertarPersonas() {
+		TreeSet<DatosPersona> tree = new TreeSet();
+		//Iterator<DatosPersona> itr = tree.iterator();
+		
+		for(DatosPersona m: Datos.PERSONAS) {
+			tree.add(m);
+		}
+		
+		//while(itr.h) {
+			
+		//}
 	}
 }
