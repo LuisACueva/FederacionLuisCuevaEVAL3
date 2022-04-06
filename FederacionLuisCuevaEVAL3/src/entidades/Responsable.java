@@ -19,6 +19,9 @@ public class Responsable {
 	public void setPatrocinador(Patrocinador patrocinador) {
 		this.patrocinador = patrocinador;
 	}
+	public void setPersona(DatosPersona persona) {
+		this.persona = persona;
+	}
 	public DatosPersona getPersona() {
 		return persona;
 	}

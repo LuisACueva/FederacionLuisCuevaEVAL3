@@ -19,30 +19,30 @@ public class Patrocinador implements operacionesCRUD<Patrocinador>{
 	private double dotacion;
 
 	private Collection<Prueba> pruebas;
-	private Responsable representante;
+	private Responsable responsable;
 	
 	public Patrocinador() {
 		
 	}
 	
-	public Patrocinador(long id, String nom, double dot, String web, long idR, String tlfR, LocalTime ltIR, LocalTime ltFR, long idP) {
+	public Patrocinador(long id, String nom, double dot, String web, long idR, String tlfR, LocalTime ltIR, LocalTime ltFR, DatosPersona dp) {
 		this.id = id;
 		this.nombre = nom;
 		this.dotacion = dot;
 		this.web = web;
-		this.representante.setId(idR);
-		this.representante.setTelefonoProf(tlfR);
-		this.representante.setHorarioIni(ltIR);
-		this.representante.setHorarioIni(ltFR);
-		this.representante.getPersona().setId(idP);
+		this.responsable.setId(idR);
+		this.responsable.setTelefonoProf(tlfR);
+		this.responsable.setHorarioIni(ltIR);
+		this.responsable.setHorarioIni(ltFR);
+		this.responsable.setPersona(dp);;
 	}
 
-	public Responsable getRepresentante() {
-		return representante;
+	public Responsable getResponsable() {
+		return responsable;
 	}
 
-	public void setRepresentante(Responsable representante) {
-		this.representante = representante;
+	public void setResponsable(Responsable responsable) {
+		this.responsable = responsable;
 	}
 
 	public Collection<Prueba> getPruebas() {
@@ -94,7 +94,7 @@ public class Patrocinador implements operacionesCRUD<Patrocinador>{
 	}
 
 	public String data() {
-		return "" + this.getId() + "|" + this.getRepresentante().getId() + "|" + this.getNombre() + "|"
+		return "" + this.getId() + "|" + this.getResponsable().getId() + "|" + this.getNombre() + "|"
 				+ this.getDotacion() + "|" + this.getWeb();
 	}
 
