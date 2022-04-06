@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import utils.ConexBD;
+import utils.Datos;
 
 //Examen 1 Ejercicio 1
 public enum Lugar implements operacionesCRUD<Lugar>{
@@ -119,10 +121,38 @@ public enum Lugar implements operacionesCRUD<Lugar>{
 
 	@Override
 	public Lugar buscarPorID(long id) {
-		// TODO Auto-generated method stub
+		Connection conex = null;
+		Statement consulta = null;
+		ResultSet resultado = null;
+		try {
+			conex = ConexBD.establecerConexion();
+			String consultaStr = "SELECT * FROM atletas WHERE id ="+ id;
+			if (conex == null)
+				conex = ConexBD.getCon();
+			consulta = conex.createStatement();
+			resultado = consulta.executeQuery(consultaStr);
+			while (resultado.next()) {
+				int idL = resultado.getInt(1);
+				return Lugar.values()[idL+1];
+			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una Excepcion:" + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
+				System.out.println("Cerrando recursos...");
+				if (resultado != null)
+					resultado.close();
+				if (consulta != null)
+					consulta.close();
+				if (conex != null)
+					conex.close();
+			} catch (SQLException e) {
+				System.out.println("Se ha producido una Excepcion:" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
-	
-	
 
 }

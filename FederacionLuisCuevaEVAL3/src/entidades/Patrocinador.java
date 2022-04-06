@@ -1,8 +1,15 @@
 package entidades;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+
+import utils.ConexBD;
+import utils.Datos;
 
 public class Patrocinador implements operacionesCRUD<Patrocinador>{
 
@@ -105,7 +112,42 @@ public class Patrocinador implements operacionesCRUD<Patrocinador>{
 
 	@Override
 	public Patrocinador buscarPorID(long id) {
-		// TODO Auto-generated method stub
+		Connection conex = null;
+		Statement consulta = null;
+		ResultSet resultado = null;
+		try {
+			conex = ConexBD.establecerConexion();
+			String consultaStr = "SELECT * FROM patrocinadores WHERE id ="+ id;
+			if (conex == null)
+				conex = ConexBD.getCon();
+			consulta = conex.createStatement();
+			resultado = consulta.executeQuery(consultaStr);
+			while (resultado.next()) {
+				int idP = resultado.getInt(1);
+				String nombre = resultado.getString(2);
+				String web = resultado.getString(3);
+				double dotacion = resultado.getDouble(4);
+				long persona = resultado.getInt(5);
+				return new Patrocinador();
+			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una Excepcion:" + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
+				System.out.println("Cerrando recursos...");
+				if (resultado != null)
+					resultado.close();
+				if (consulta != null)
+					consulta.close();
+				if (conex != null)
+					conex.close();
+			} catch (SQLException e) {
+				System.out.println("Se ha producido una Excepcion:" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
+		
 }

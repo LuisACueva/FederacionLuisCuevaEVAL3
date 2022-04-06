@@ -264,8 +264,7 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta>{
 				float altura = resultado.getFloat(2);
 				float peso = resultado.getFloat(3);
 				long persona = resultado.getInt(4);
-				System.out.println("IDAtleta:" + idA + ", altura:" + altura + ", peso " + peso
-						+ ", IDPersona:" + persona);
+				return new Atleta(idA, altura, peso, Datos.buscarPersonaPorId(persona));
 			}
 		} catch (SQLException e) {
 			System.out.println("Se ha producido una Excepcion:" + e.getMessage());
