@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
-public class Patrocinador {
+public class Patrocinador implements operacionesCRUD<Patrocinador>{
 
 	private long id;
 	private String nombre;
@@ -89,5 +89,23 @@ public class Patrocinador {
 	public String data() {
 		return "" + this.getId() + "|" + this.getRepresentante().getId() + "|" + this.getNombre() + "|"
 				+ this.getDotacion() + "|" + this.getWeb();
+	}
+
+	@Override
+	public boolean insertarConID(Patrocinador elemento) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public long insertarSinID(Patrocinador elemento) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Patrocinador buscarPorID(long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

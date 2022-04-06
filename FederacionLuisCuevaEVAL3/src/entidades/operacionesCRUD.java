@@ -15,5 +15,11 @@ public interface operacionesCRUD<T> {
 	 */
 	public long insertarSinID(T elemento);
 	
+	
+	/***
+	 * Este método busca en la base de datos los datos de la entidad mediante el parámetro id
+	 * @param id que sirve para identificar el elemento T en la base de datos
+	 * @return un objeto T cuyo id sea el introducido como parámetro.
+	 */
 	public T buscarPorID(long id);
 }
