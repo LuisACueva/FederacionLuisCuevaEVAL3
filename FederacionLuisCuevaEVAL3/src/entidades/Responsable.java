@@ -1,6 +1,7 @@
 package entidades;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Responsable {
 
@@ -9,6 +10,18 @@ public class Responsable {
 	private LocalTime horarioIni;
 	private LocalTime horarioFin;
 	
+	private DatosPersona persona;
+	private Patrocinador patrocinador;
+	
+	public Patrocinador getPatrocinador() {
+		return patrocinador;
+	}
+	public void setPatrocinador(Patrocinador patrocinador) {
+		this.patrocinador = patrocinador;
+	}
+	public DatosPersona getPersona() {
+		return persona;
+	}
 	public long getId() {
 		return id;
 	}
@@ -30,11 +43,18 @@ public class Responsable {
 	public LocalTime getHorarioFin() {
 		return horarioFin;
 	}
+	
 	public void setHorarioFin(LocalTime horarioFin) {
 		this.horarioFin = horarioFin;
 	}
 	
 	public void importarRepresentantes() {
 		
+	}
+	
+	public String data() {
+		return "" + this.getId() + "|"+ persona.getId() + "|"  + this.getTelefonoProf() + "|"
+				+ this.getHorarioIni().format(DateTimeFormatter.ofPattern("HH:mm")) + "|"
+				+ this.getHorarioFin().format(DateTimeFormatter.ofPattern("HH:mm"));
 	}
 }
