@@ -1,9 +1,11 @@
 package entidades;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 import utils.ConexBD;
@@ -247,7 +249,41 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta>{
 
 	@Override
 	public Atleta buscarPorID(long id) {
-		// TODO Auto-generated method stub
+		Connection conex = null;
+		Statement consulta = null;
+		ResultSet resultado = null;
+		try {
+			conex = ConexBD.establecerConexion();
+			String consultaStr = "SELECT * FROM atletas WHERE id ="+ id;
+			if (conex == null)
+				conex = ConexBD.getCon();
+			consulta = conex.createStatement();
+			resultado = consulta.executeQuery(consultaStr);
+			while (resultado.next()) {
+				int idA = resultado.getInt(1);
+				float altura = resultado.getFloat(2);
+				float peso = resultado.getFloat(3);
+				long persona = resultado.getInt(4);
+				System.out.println("IDAtleta:" + idA + ", altura:" + altura + ", peso " + peso
+						+ ", IDPersona:" + persona);
+			}
+		} catch (SQLException e) {
+			System.out.println("Se ha producido una Excepcion:" + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
+				System.out.println("Cerrando recursos...");
+				if (resultado != null)
+					resultado.close();
+				if (consulta != null)
+					consulta.close();
+				if (conex != null)
+					conex.close();
+			} catch (SQLException e) {
+				System.out.println("Se ha producido una Excepcion:" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
 		return null;
 	}
 }
