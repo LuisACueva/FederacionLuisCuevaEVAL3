@@ -1,5 +1,6 @@
 package entidades;
 
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
@@ -12,6 +13,22 @@ public class Patrocinador {
 
 	private Collection<Prueba> pruebas;
 	private Responsable representante;
+	
+	public Patrocinador() {
+		
+	}
+	
+	public Patrocinador(long id, String nom, double dot, String web, long idR, String tlfR, LocalTime ltIR, LocalTime ltFR, long idP) {
+		this.id = id;
+		this.nombre = nom;
+		this.dotacion = dot;
+		this.web = web;
+		this.representante.setId(idR);
+		this.representante.setTelefonoProf(tlfR);
+		this.representante.setHorarioIni(ltIR);
+		this.representante.setHorarioIni(ltFR);
+		this.representante.getPersona().setId(idP);
+	}
 
 	public Responsable getRepresentante() {
 		return representante;
