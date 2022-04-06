@@ -36,6 +36,10 @@ public class Patrocinador implements operacionesCRUD<Patrocinador>{
 		this.responsable.setHorarioIni(ltFR);
 		this.responsable.setPersona(dp);;
 	}
+	
+	public Patrocinador(long id, String nom, String web, double dot, DatosPersona dp) {
+		
+	}
 
 	public Responsable getResponsable() {
 		return responsable;
@@ -117,7 +121,7 @@ public class Patrocinador implements operacionesCRUD<Patrocinador>{
 		ResultSet resultado = null;
 		try {
 			conex = ConexBD.establecerConexion();
-			String consultaStr = "SELECT * FROM patrocinadores WHERE id ="+ id;
+			String consultaStr = "SELECT * FROM patrocinadores FULL OUTER JOIN personas WHERE id ="+ id;
 			if (conex == null)
 				conex = ConexBD.getCon();
 			consulta = conex.createStatement();
@@ -127,8 +131,18 @@ public class Patrocinador implements operacionesCRUD<Patrocinador>{
 				String nombre = resultado.getString(2);
 				String web = resultado.getString(3);
 				double dotacion = resultado.getDouble(4);
-				long persona = resultado.getInt(5);
-				return new Patrocinador();
+				long idPe = resultado.getInt(5);
+				String nombreP = resultado.getString(6);
+				String telefono = resultado.getString(7);
+				String nifnie = resultado.getString(8);
+				
+				Documentacion doc = new NIE(nifnie);
+				if(doc.validar()) {
+					doc = new NIE(nifnie);
+				}else {
+					doc = new NIF(nifnie);
+				}
+				return new Patrocinador(idP, nombre, web, dotacion, new DatosPersona(idP, nombre, telefono, doc));
 			}
 		} catch (SQLException e) {
 			System.out.println("Se ha producido una Excepcion:" + e.getMessage());

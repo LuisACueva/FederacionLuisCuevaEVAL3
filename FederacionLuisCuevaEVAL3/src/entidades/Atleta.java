@@ -254,17 +254,26 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta>{
 		ResultSet resultado = null;
 		try {
 			conex = ConexBD.establecerConexion();
-			String consultaStr = "SELECT * FROM atletas WHERE id ="+ id;
+			String consultaStr = "SELECT * FROM atletas FULL OUTER JOIN personas WHERE id ="+ id;
 			if (conex == null)
 				conex = ConexBD.getCon();
 			consulta = conex.createStatement();
 			resultado = consulta.executeQuery(consultaStr);
 			while (resultado.next()) {
-				int idA = resultado.getInt(1);
+				long idA = resultado.getInt(1);
 				float altura = resultado.getFloat(2);
 				float peso = resultado.getFloat(3);
-				long persona = resultado.getInt(4);
-				return new Atleta(idA, altura, peso, Datos.buscarPersonaPorId(persona));
+				long idP = resultado.getInt(4);
+				String nombre = resultado.getString(5);
+				String telefono = resultado.getString(6);
+				String nifnie = resultado.getString(7);
+				Documentacion doc = new NIE(nifnie);
+				if(doc.validar()) {
+					doc = new NIE(nifnie);
+				}else {
+					doc = new NIF(nifnie);
+				}
+				return new Atleta(idA, altura, peso, new DatosPersona(idP, nombre, telefono, doc));
 			}
 		} catch (SQLException e) {
 			System.out.println("Se ha producido una Excepcion:" + e.getMessage());

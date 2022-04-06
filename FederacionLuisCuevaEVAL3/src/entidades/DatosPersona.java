@@ -48,6 +48,14 @@ public class DatosPersona implements Comparable<DatosPersona> {
 		this.fechaNac = fechaNac;
 		this.nifnie = nifnie;
 	}
+	
+	public DatosPersona(long id, String nombre, String telefono, Documentacion nifnie) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.nifnie = nifnie;
+	}
 
 	public long getId() {
 		return id;
