@@ -21,6 +21,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 
 public class PanelInsertPrueba extends JPanel {
@@ -111,7 +112,9 @@ public class PanelInsertPrueba extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Prueba insertPrueba;
-				
+				String nombre = textField.getText();
+				String[] fech = textField_1.getText().split("/");
+				LocalDate fecha = LocalDate.of(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]), Integer.parseInt(fech[0]));
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
