@@ -10,6 +10,13 @@ public class Participante {
 	private boolean penalizacion = false;
 	private String otros;
 
+	public Participante(long id, int dorsal, char calle) {
+		super();
+		this.id = id;
+		this.dorsal = dorsal;
+		this.calle = calle;
+	}
+	
 	public Participante(long id, int dorsal, char calle, Tiempo tie, boolean pen, String otr) {
 		super();
 		this.id = id;
