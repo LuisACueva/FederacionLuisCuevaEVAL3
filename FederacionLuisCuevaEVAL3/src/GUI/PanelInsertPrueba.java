@@ -115,6 +115,12 @@ public class PanelInsertPrueba extends JPanel {
 				String nombre = textField.getText();
 				String[] fech = textField_1.getText().split("/");
 				LocalDate fecha = LocalDate.of(Integer.parseInt(fech[2]), Integer.parseInt(fech[1]), Integer.parseInt(fech[0]));
+				String lugar = Lugar.values()[comboBox.getSelectedIndex()].getNombre();
+				boolean individual = rdbtnNewRadioButton.isSelected();
+				PatrocinadorDAO patrocinadorDao = new PatrocinadorDAO(ConexBD.establecerConexion());
+				String patrocinador = patrocinadorDao.buscarPorID(comboBox_1.getSelectedIndex()+1).getNombre();
+				
+			// con los datos anteriores se utilizaría el método insertarSinID de DAOpruebas, pero esta clase no está implementada
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
