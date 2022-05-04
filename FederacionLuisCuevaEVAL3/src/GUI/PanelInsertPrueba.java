@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 
 import DAO.LugarDAO;
+import DAO.PatrocinadorDAO;
 import entidades.Lugar;
+import entidades.Patrocinador;
 import utils.ConexBD;
 
 import javax.swing.ButtonGroup;
@@ -17,6 +19,8 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelInsertPrueba extends JPanel {
 	private JTextField txtNuevaId;
@@ -95,14 +99,27 @@ public class PanelInsertPrueba extends JPanel {
 		add(lblNewLabel_5);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Seleccione Patrocinador"}));
+		PatrocinadorDAO patrocinadorDao = new PatrocinadorDAO(ConexBD.establecerConexion());
+
+		ArrayList<Patrocinador> listPatrocinadores = (ArrayList<Patrocinador>) patrocinadorDao.buscarTodos();
+		comboBox_1.setModel(new DefaultComboBoxModel(listPatrocinadores.toArray()));
 		comboBox_1.setBounds(206, 365, 140, 22);
 		add(comboBox_1);
 		
 		JButton btnNewButton = new JButton("Aceptar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnNewButton.setBounds(319, 414, 107, 41);
+		btnNewButton.setBounds(253, 417, 107, 41);
 		add(btnNewButton);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnCancelar.setBounds(378, 417, 107, 41);
+		add(btnCancelar);
 		
 	}
 }
