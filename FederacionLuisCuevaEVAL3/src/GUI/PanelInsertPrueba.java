@@ -11,6 +11,7 @@ import DAO.LugarDAO;
 import DAO.PatrocinadorDAO;
 import entidades.Lugar;
 import entidades.Patrocinador;
+import entidades.Prueba;
 import utils.ConexBD;
 
 import javax.swing.ButtonGroup;
@@ -109,6 +110,7 @@ public class PanelInsertPrueba extends JPanel {
 		JButton btnNewButton = new JButton("Aceptar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Prueba insertPrueba;
 				
 			}
 		});
