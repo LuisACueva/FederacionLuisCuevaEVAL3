@@ -3,12 +3,20 @@ package GUI;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
+
+import DAO.LugarDAO;
+import entidades.Lugar;
+import utils.ConexBD;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.DefaultComboBoxModel;
 
 public class PanelInsertPrueba extends JPanel {
 	private JTextField txtNuevaId;
@@ -34,7 +42,7 @@ public class PanelInsertPrueba extends JPanel {
 		txtNuevaId.setEnabled(false);
 		txtNuevaId.setText("nueva id");
 		txtNuevaId.setEditable(false);
-		txtNuevaId.setBounds(206, 162, 91, 20);
+		txtNuevaId.setBounds(206, 162, 127, 20);
 		add(txtNuevaId);
 		txtNuevaId.setColumns(10);
 		
@@ -43,7 +51,7 @@ public class PanelInsertPrueba extends JPanel {
 		add(lblNewLabel_2);
 		
 		textField = new JTextField();
-		textField.setBounds(206, 214, 91, 20);
+		textField.setBounds(206, 214, 127, 20);
 		add(textField);
 		textField.setColumns(10);
 		
@@ -52,7 +60,7 @@ public class PanelInsertPrueba extends JPanel {
 		add(lblNewLabel_3);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(206, 245, 91, 20);
+		textField_1.setBounds(206, 245, 127, 20);
 		add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -61,7 +69,12 @@ public class PanelInsertPrueba extends JPanel {
 		add(lblNewLabel_4);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(206, 280, 91, 22);
+		LugarDAO lugarDao = new LugarDAO(ConexBD.establecerConexion());
+
+		ArrayList<Lugar> listLugares = (ArrayList<Lugar>) lugarDao.buscarTodos();
+ 
+		comboBox.setModel(new DefaultComboBoxModel(listLugares.toArray()));
+		comboBox.setBounds(206, 280, 140, 22);
 		add(comboBox);
 		
 		ButtonGroup bg = new ButtonGroup();
@@ -82,7 +95,8 @@ public class PanelInsertPrueba extends JPanel {
 		add(lblNewLabel_5);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(206, 365, 91, 22);
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Seleccione Patrocinador"}));
+		comboBox_1.setBounds(206, 365, 140, 22);
 		add(comboBox_1);
 		
 		JButton btnNewButton = new JButton("Aceptar");
