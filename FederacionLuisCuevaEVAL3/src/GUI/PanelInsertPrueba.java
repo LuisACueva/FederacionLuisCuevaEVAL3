@@ -8,6 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JRadioButton;
+import javax.swing.JButton;
 
 public class PanelInsertPrueba extends JPanel {
 	private JTextField txtNuevaId;
@@ -83,6 +84,11 @@ public class PanelInsertPrueba extends JPanel {
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(206, 365, 91, 22);
 		add(comboBox_1);
+		
+		JButton btnNewButton = new JButton("Aceptar");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnNewButton.setBounds(319, 414, 107, 41);
+		add(btnNewButton);
 		
 	}
 }
