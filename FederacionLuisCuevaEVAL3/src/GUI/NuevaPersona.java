@@ -18,6 +18,10 @@ import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.Calendar;
 import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import javax.swing.event.CaretListener;
@@ -245,12 +249,48 @@ public class NuevaPersona extends JFrame {
 				}
 				persona.setFechaNac(nac);
 				atl.setPersona(persona);
-
+				
 				if (valid == 5) {
 					DAOpersona daop = new DAOpersona(ConexBD.establecerConexion());
-					daop.insertarSinID(atl.getPersona());
+					long validP = daop.insertarSinID(atl.getPersona());
 					AtletaDAO daoA = new AtletaDAO(ConexBD.establecerConexion());
-					daoA.insertarSinID(atl);
+					long validA = daoA.insertarSinID(atl);
+					
+					if(validP != (-1) && validA != (-1)) {
+						try {
+							FileOutputStream fos = new FileOutputStream("NIFNIE_Atleta");
+							DataOutputStream salida = new DataOutputStream(fos);
+							String cadena = validA + atl.getPersona().getNombre() +
+									atl.getPersona().getNifnie().mostrar() +
+									atl.getPersona().getFechaNac() +
+									atl.getAltura() + atl.getPeso() +
+									atl.getPersona().getTelefono() + 
+									validP +"";
+							int cont = cadena.length();
+							
+							for (int i = 0; i<cont; i++) {
+				                try {
+									salida.writeChar(cadena.toCharArray()[i]);
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}                                   
+				             
+				            }
+							salida.flush();
+							salida.close();
+							fos.close();
+							
+							
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+					}
 				}
 			}
 		});
