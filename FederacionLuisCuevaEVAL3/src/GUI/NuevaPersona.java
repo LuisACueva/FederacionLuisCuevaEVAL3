@@ -26,6 +26,7 @@ import entidades.Atleta;
 import entidades.DatosPersona;
 import entidades.NIE;
 import entidades.NIF;
+import validaciones.Validaciones;
 
 import javax.swing.event.CaretEvent;
 import javax.swing.JButton;
@@ -67,18 +68,18 @@ public class NuevaPersona extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNombre = new JLabel("Nombre *:");
 		lblNombre.setBounds(32, 38, 65, 14);
 		contentPane.add(lblNombre);
-		
+
 		textFieldNombre = new JTextField();
 		textFieldNombre.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
-				if(textFieldNombre.getText().length()<3 || textFieldNombre.getText().length()>50) {
+				if (textFieldNombre.getText().length() < 3 || textFieldNombre.getText().length() > 50) {
 					textFieldNombre.setBackground(Color.red);
 				}
-				if(textFieldNombre.getText().length()>=3 && textFieldNombre.getText().length()<50) {
+				if (textFieldNombre.getText().length() >= 3 && textFieldNombre.getText().length() < 50) {
 					textFieldNombre.setBackground(Color.white);
 				}
 			}
@@ -87,102 +88,104 @@ public class NuevaPersona extends JFrame {
 		textFieldNombre.setBounds(111, 35, 86, 20);
 		contentPane.add(textFieldNombre);
 		textFieldNombre.setColumns(10);
-		
+
 		JLabel lblNifNie = new JLabel("Selecciona la opcion e\r\n");
 		lblNifNie.setBounds(32, 91, 112, 30);
 		contentPane.add(lblNifNie);
-		
+
 		JLabel lblNewLabel = new JLabel("Introduzca el valor *");
 		lblNewLabel.setBounds(32, 112, 112, 14);
 		contentPane.add(lblNewLabel);
-		
+
 		JRadioButton rdbtnNif = new JRadioButton("NIF");
 		buttonGroup.add(rdbtnNif);
 		rdbtnNif.setBounds(153, 84, 50, 23);
 		contentPane.add(rdbtnNif);
-		
+
 		JRadioButton rdbtnNie = new JRadioButton("NIE");
 		buttonGroup.add(rdbtnNie);
 		rdbtnNie.setBounds(207, 84, 109, 23);
 		contentPane.add(rdbtnNie);
-		
+
 		textNieNif = new JTextField();
 		textNieNif.setBounds(154, 109, 86, 20);
 		contentPane.add(textNieNif);
 		textNieNif.setColumns(10);
-		
+
 		JLabel lblTelefono = new JLabel("Teléfono:");
 		lblTelefono.setBounds(32, 166, 46, 14);
 		contentPane.add(lblTelefono);
-		
+
 		textTelefono = new JTextField();
 		lblTelefono.setLabelFor(textTelefono);
 		textTelefono.setBounds(111, 163, 129, 20);
 		contentPane.add(textTelefono);
 		textTelefono.setColumns(10);
-		
+
 		JLabel lblNacimiento = new JLabel("Fecha Nacimiento *:");
 		lblNacimiento.setBounds(32, 214, 98, 14);
 		contentPane.add(lblNacimiento);
-		
+
 		JSpinner spinnerNacimiento = new JSpinner();
 		lblNacimiento.setLabelFor(spinnerNacimiento);
 		spinnerNacimiento.setModel(new SpinnerDateModel(new Date(-315622800000L), null, null, Calendar.DAY_OF_YEAR));
 		spinnerNacimiento.setBounds(140, 211, 100, 20);
 		contentPane.add(spinnerNacimiento);
-		
+
 		JLabel lblAltura = new JLabel("Altura *:");
 		lblAltura.setBounds(32, 293, 65, 14);
 		contentPane.add(lblAltura);
-		
+
 		JLabel lblPeso = new JLabel("Peso *:");
 		lblPeso.setBounds(32, 318, 65, 14);
 		contentPane.add(lblPeso);
-		
+
 		textAltura = new JTextField();
 		textAltura.setBounds(86, 290, 86, 20);
 		contentPane.add(textAltura);
 		textAltura.setColumns(10);
-		
+
 		textPeso = new JTextField();
 		textPeso.setBounds(86, 318, 86, 20);
 		contentPane.add(textPeso);
 		textPeso.setColumns(10);
-		
+
 		JLabel lblAlturaFormato = new JLabel("m.(en formato xx,xx)");
 		lblAlturaFormato.setBounds(182, 293, 134, 14);
 		contentPane.add(lblAlturaFormato);
-		
+
 		JLabel lblPesoFormato = new JLabel("Kg.(en formato xx,xx)");
 		lblPesoFormato.setBounds(182, 318, 134, 14);
 		contentPane.add(lblPesoFormato);
-		
+
 		JLabel lblEquipo = new JLabel("Equipo:");
 		lblEquipo.setBounds(32, 375, 46, 14);
 		contentPane.add(lblEquipo);
-		
+
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(86, 371, 208, 22);
 		contentPane.add(comboBox);
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int seleccion = JOptionPane.showConfirmDialog(null, 
-						"¿Desea cerrar la ventana?", "Aviso", 
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.WARNING_MESSAGE);
-				switch(seleccion) {
-				case JOptionPane.YES_OPTION: System.exit(0);  break;
-				case JOptionPane.NO_OPTION: break;
-				case JOptionPane.CANCEL_OPTION: break;
+				int seleccion = JOptionPane.showConfirmDialog(null, "¿Desea cerrar la ventana?", "Aviso",
+						JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+				switch (seleccion) {
+				case JOptionPane.YES_OPTION:
+					System.exit(0);
+					break;
+				case JOptionPane.NO_OPTION:
+					break;
+				case JOptionPane.CANCEL_OPTION:
+					break;
 				}
-				
+
 			}
 		});
 		btnCancelar.setBounds(304, 420, 118, 43);
 		contentPane.add(btnCancelar);
-		
+
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -194,31 +197,44 @@ public class NuevaPersona extends JFrame {
 				DatosPersona persona = new DatosPersona();
 				float altura = Float.parseFloat(textAltura.getText());
 				float peso = Float.parseFloat(textPeso.getText());
-				
-				if(nom.length()>=3 && nom.length()<=50) {
-					persona.setNombre(nom);
-					valid ++;
-				}
-				if(tel.length() == 9) {
+				Atleta atl = new Atleta();
+
+				if (Validaciones.validarTelefono(tel)) {
 					persona.setTelefono(tel);
-					valid ++;
+					valid++;
 				}
-				if(rdbtnNie.isSelected()) {
-					persona.setNifnie(new NIE(doc));
-					valid ++;
-				}else {
-					persona.setNifnie(new NIF(doc));
-					valid ++;
+
+				if (Validaciones.validarAltura(altura)) {
+					atl.setAltura(altura);
+					valid++;
+				}
+
+				if (Validaciones.validarPeso(peso)) {
+					atl.setPeso(peso);
+					valid++;
+				}
+
+				if (nom.length() >= 3 && nom.length() <= 50) {
+					persona.setNombre(nom);
+					valid++;
+				}
+
+				if (rdbtnNie.isSelected()) {
+					if (Validaciones.validarNIE(doc)) {
+						persona.setNifnie(new NIE(doc));
+						valid++;
+					}
+				} else {
+					if (Validaciones.validarNIF(doc)) {
+						persona.setNifnie(new NIF(doc));
+						valid++;
+					}
 				}
 				persona.setFechaNac(nac);
-				
-				Atleta atl = new Atleta();
 				atl.setPersona(persona);
-				atl.setAltura(altura);
-				atl.setPeso(peso);
-				
-				if(valid == 4) {
-					
+
+				if (valid == 5) {
+					//Llamamos al metodo para introducir al atleta en la base de datos
 				}
 			}
 		});
