@@ -17,6 +17,14 @@ public class Manager {
 
 	private DatosPersona persona;
 
+	public Manager() {
+		
+	}
+	
+	public void setPersona(DatosPersona persona) {
+		this.persona = persona;
+	}
+
 	public Manager(long id, String telefono, String direccion) {
 		super();
 		this.id = id;
