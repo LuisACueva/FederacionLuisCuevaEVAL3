@@ -23,7 +23,7 @@ public class principal_LuisCueva {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//Commit prueba
+		//Commit prueba12
 		Connection conex = null;
 		Statement consulta = null;
 		ResultSet resultado = null;

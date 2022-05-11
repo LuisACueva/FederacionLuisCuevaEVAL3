@@ -23,6 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
 
 public class PanelInsertPrueba extends JPanel {
 	private JTextField txtNuevaId;
