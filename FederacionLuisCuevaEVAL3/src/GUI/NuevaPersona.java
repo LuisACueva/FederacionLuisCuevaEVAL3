@@ -184,8 +184,8 @@ public class NuevaPersona extends JFrame {
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.WARNING_MESSAGE);
 				switch(seleccion) {
-				case JOptionPane.YES_OPTION: break;
-				case JOptionPane.NO_OPTION: System.exit(0); break;
+				case JOptionPane.YES_OPTION: System.exit(0);  break;
+				case JOptionPane.NO_OPTION: break;
 				case JOptionPane.CANCEL_OPTION: break;
 				}
 				
