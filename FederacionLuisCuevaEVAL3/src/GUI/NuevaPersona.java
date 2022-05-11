@@ -34,6 +34,7 @@ import validaciones.Validaciones;
 import javax.swing.event.CaretEvent;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class NuevaPersona extends JFrame {
 
@@ -166,6 +167,15 @@ public class NuevaPersona extends JFrame {
 		contentPane.add(lblEquipo);
 
 		JComboBox comboBox = new JComboBox();
+		/* 
+		 * 
+		 * Debemos implementar la clase EquipoDAO, acceder a los esquipos de 
+		 * la BBDD, y comprobar si nuestro atleta pertenece a alguno de ellos.
+		 * En caso afirmativo hacer un String[] con esos equipos e incluidlo en
+		 * DefaultComboBoxModel. En caso de no encontrar ninguno, no hacer nada.
+		 * 
+		 * */
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"No se encuentra en ningún equipo"}));
 		comboBox.setBounds(86, 371, 208, 22);
 		contentPane.add(comboBox);
 
