@@ -7,7 +7,7 @@ import entidades.Metal;
 import entidades.operacionesCRUD;
 
 public class DAOmetales implements operacionesCRUD<Metal> {
-	//DAO
+	//DAO metales
 	Connection conex;
 
 	public DAOmetales(Connection conex) {
