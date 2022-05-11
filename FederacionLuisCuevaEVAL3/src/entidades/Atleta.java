@@ -52,6 +52,10 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta>{
 		this.persona = Datos.buscarPersonaPorId(a.idAtleta);
 	}
 
+	public Atleta() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public long getId() {
 		return idAtleta;
@@ -78,6 +82,10 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta>{
 		this.peso = peso;
 	}
 
+	public void setPersona(DatosPersona per) {
+		this.persona = per;
+	}
+	
 	public DatosPersona getPersona() {
 		return this.persona;
 	}
@@ -294,4 +302,5 @@ public class Atleta extends Participante implements operacionesCRUD<Atleta>{
 		}
 		return null;
 	}
+
 }
