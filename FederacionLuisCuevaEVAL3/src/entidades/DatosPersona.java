@@ -31,6 +31,10 @@ public class DatosPersona implements Comparable<DatosPersona> {
 
 	private Documentacion nifnie; //Examen 2 Ejercicio 3.2
 
+	public DatosPersona(){
+		
+	}	
+	
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac) {
 		super();
 		this.id = id;

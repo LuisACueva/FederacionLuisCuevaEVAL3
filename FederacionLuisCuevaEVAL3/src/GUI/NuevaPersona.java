@@ -22,7 +22,10 @@ import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import javax.swing.event.CaretListener;
 
+import entidades.Atleta;
 import entidades.DatosPersona;
+import entidades.NIE;
+import entidades.NIF;
 
 import javax.swing.event.CaretEvent;
 import javax.swing.JButton;
@@ -128,20 +131,6 @@ public class NuevaPersona extends JFrame {
 		spinnerNacimiento.setBounds(140, 211, 100, 20);
 		contentPane.add(spinnerNacimiento);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nom;
-				String doc;
-				String tel;
-				LocalDate nac;
-				//DatosPersona persona = new DatosPersona(eventMask, tel, tel, null);
-				
-			}
-		});
-		btnAceptar.setBounds(176, 420, 118, 43);
-		contentPane.add(btnAceptar);
-		
 		JLabel lblAltura = new JLabel("Altura *:");
 		lblAltura.setBounds(32, 293, 65, 14);
 		contentPane.add(lblAltura);
@@ -193,5 +182,47 @@ public class NuevaPersona extends JFrame {
 		});
 		btnCancelar.setBounds(304, 420, 118, 43);
 		contentPane.add(btnCancelar);
+		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int valid = 0;
+				String nom = textFieldNombre.getText();
+				String doc = textNieNif.getSelectedText();
+				String tel = textTelefono.getText();
+				LocalDate nac = (LocalDate) spinnerNacimiento.getValue();
+				DatosPersona persona = new DatosPersona();
+				float altura = Float.parseFloat(textAltura.getText());
+				float peso = Float.parseFloat(textPeso.getText());
+				
+				if(nom.length()>=3 && nom.length()<=50) {
+					persona.setNombre(nom);
+					valid ++;
+				}
+				if(tel.length() == 9) {
+					persona.setTelefono(tel);
+					valid ++;
+				}
+				if(rdbtnNie.isSelected()) {
+					persona.setNifnie(new NIE(doc));
+					valid ++;
+				}else {
+					persona.setNifnie(new NIF(doc));
+					valid ++;
+				}
+				persona.setFechaNac(nac);
+				
+				Atleta atl = new Atleta();
+				atl.setPersona(persona);
+				atl.setAltura(altura);
+				atl.setPeso(peso);
+				
+				if(valid == 4) {
+					
+				}
+			}
+		});
+		btnAceptar.setBounds(176, 420, 118, 43);
+		contentPane.add(btnAceptar);
 	}
 }
