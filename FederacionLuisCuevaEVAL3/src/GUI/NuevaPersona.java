@@ -22,10 +22,13 @@ import java.time.LocalDate;
 import java.awt.event.ActionEvent;
 import javax.swing.event.CaretListener;
 
+import DAO.AtletaDAO;
+import DAO.DAOpersona;
 import entidades.Atleta;
 import entidades.DatosPersona;
 import entidades.NIE;
 import entidades.NIF;
+import utils.ConexBD;
 import validaciones.Validaciones;
 
 import javax.swing.event.CaretEvent;
@@ -234,7 +237,10 @@ public class NuevaPersona extends JFrame {
 				atl.setPersona(persona);
 
 				if (valid == 5) {
-					//Llamamos al metodo para introducir al atleta en la base de datos
+					DAOpersona daop = new DAOpersona(ConexBD.establecerConexion());
+					daop.insertarSinID(atl.getPersona());
+					AtletaDAO daoA = new AtletaDAO(ConexBD.establecerConexion());
+					daoA.insertarSinID(atl);
 				}
 			}
 		});
