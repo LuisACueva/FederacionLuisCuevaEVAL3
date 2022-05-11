@@ -1,8 +1,9 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
+import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,6 +15,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.Calendar;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NuevaPersona extends JFrame {
 
@@ -55,6 +58,13 @@ public class NuevaPersona extends JFrame {
 		contentPane.add(lblNombre);
 		
 		textFieldNombre = new JTextField();
+		textFieldNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldNombre.getText().length()<3 || textFieldNombre.getText().length()>50) {
+					//textFieldNombre.setForeground();
+				}
+			}
+		});
 		lblNombre.setLabelFor(textFieldNombre);
 		textFieldNombre.setBounds(111, 35, 86, 20);
 		contentPane.add(textFieldNombre);
@@ -64,7 +74,7 @@ public class NuevaPersona extends JFrame {
 		lblNifNie.setBounds(32, 91, 112, 30);
 		contentPane.add(lblNifNie);
 		
-		JLabel lblNewLabel = new JLabel("Introduzca el valor");
+		JLabel lblNewLabel = new JLabel("Introduzca el valor *");
 		lblNewLabel.setBounds(32, 112, 112, 14);
 		contentPane.add(lblNewLabel);
 		
