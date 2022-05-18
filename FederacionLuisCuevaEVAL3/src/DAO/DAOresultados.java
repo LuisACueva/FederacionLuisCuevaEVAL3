@@ -39,12 +39,12 @@ public class DAOresultados implements operacionesCRUD<Resultado> {
 			pstmt.setBoolean(1, elemento.isDefinitivo());
 			java.sql.Date fechaSQL = java.sql.Date.valueOf(elemento.getFechahora().toLocalDate());
 			pstmt.setDate(2, fechaSQL);
-			pstmt.setLong(3, elemento.getPrimero().getId());
-			pstmt.setLong(4, elemento.getSegundo().getId());
-			pstmt.setLong(5, elemento.getTercero().getId());
-			pstmt.setLong(6, elemento.getIdpodio()[0]);
-			pstmt.setLong(7, elemento.getIdpodio()[1]);
-			pstmt.setLong(8, elemento.getIdpodio()[2]);
+			pstmt.setLong(3, 1/*elemento.getPrimero().getId() recoge el id del metal */);
+			pstmt.setLong(4, 1/*elemento.getSegundo().getId() recoge el id del metal */);
+			pstmt.setLong(5, 1/*elemento.getTercero().getId() recoge el id del metal */);
+			pstmt.setLong(6, 1/*elemento.getIdpodio()[0] recoge el id de participante */);
+			pstmt.setLong(7, 1/*elemento.getIdpodio()[1] recoge el id de participante */);
+			pstmt.setLong(8, 1/*elemento.getIdpodio()[2] recoge el id de participante */);
 			int resultadoInsercion = pstmt.executeUpdate();
 			ret = elemento.getId();
 		} catch (SQLException e) {
