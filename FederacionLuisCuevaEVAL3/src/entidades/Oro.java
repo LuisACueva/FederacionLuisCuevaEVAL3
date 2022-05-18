@@ -33,6 +33,7 @@ public class Oro extends Metal {
 		}
 		this.fecha = fecha;
 	}
+	
 
 	public long getId() {
 		return id;

@@ -24,6 +24,18 @@ public class Resultado {
 		this.bronce = bronce;
 	}
 
+	
+	
+	public Resultado(Oro oro, Plata plata, Bronce bronce, boolean definitivo, LocalDateTime fechahora) {
+		this.oro = oro;
+		this.plata = plata;
+		this.bronce = bronce;
+		this.definitivo = definitivo;
+		this.fechahora = fechahora;
+	}
+
+
+
 	public long getId() {
 		return id;
 	}

@@ -27,9 +27,13 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 
 import entidades.Atleta;
+import entidades.Bronce;
 import entidades.Lugar;
+import entidades.Oro;
 import entidades.Patrocinador;
+import entidades.Plata;
 import entidades.Prueba;
+import entidades.Resultado;
 import entidades.Tiempo;
 import utils.ConexBD;
 import validaciones.Validaciones;
@@ -401,7 +405,7 @@ public class CerrarPrueba extends JFrame {
 						(Integer) spinnerS2.getValue(), (Integer) spinnerC2.getValue());
 				Tiempo temp3 = new Tiempo((Integer) spinnerH3.getValue(), (Integer) spinnerM3.getValue(),
 						(Integer) spinnerS3.getValue(), (Integer) spinnerC3.getValue());
-				if (temp1.compareTo(temp2) > 0 && temp2.compareTo(temp3) > 0) {
+				if (temp1.compareTo(temp2) < 0 && temp2.compareTo(temp3) < 0) {
 					if (temp1.getHoras() >= 0 && temp1.getMinutos() >= 0 && temp1.getSegundos() >= 0
 							&& temp1.getCentesimas() >= 0) {
 						if (temp2.getHoras() >= 0 && temp2.getMinutos() >= 0 && temp2.getSegundos() >= 0
@@ -416,7 +420,7 @@ public class CerrarPrueba extends JFrame {
 						}
 					}
 				}
-
+				System.out.println(comboBoxOros.getSelectedItem().toString().substring(3,7));
 				if (valid) {
 					DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("hh:mm:ss");
 					DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -426,18 +430,18 @@ public class CerrarPrueba extends JFrame {
 							+ "Primer puesto para " + comboBoxPuesto1.getSelectedItem().toString().split("\\|")[1]
 							+ " (" + comboBoxPuesto1.getSelectedItem().toString().split("\\|")[2] + "),"
 							+ " con un tiempo de " + temp1.toString() + "." + " Se le otorga el oro "
-							+ comboBoxOros.getSelectedItem().toString() + " de pureza "
-							+ comboBoxOros.getSelectedItem().toString() + "%.\n" + "\n" + "Segundo puesto para "
+							+ comboBoxOros.getSelectedItem().toString().substring(1,2) + " de pureza "
+							+ comboBoxOros.getSelectedItem().toString().substring(3,7) + "%.\n" + "\n" + "Segundo puesto para "
 							+ comboBoxPuesto2.getSelectedItem().toString().split("\\|")[1] + " ("
 							+ comboBoxPuesto2.getSelectedItem().toString().split("\\|")[2] + ")," + " con un tiempo de "
 							+ temp2.toString() + "." + " Se le otorga la plata "
-							+ comboBoxPlatas.getSelectedItem().toString() + " de pureza "
-							+ comboBoxPlatas.getSelectedItem().toString() + "%.\n" + "\n" + "Tercer puesto para "
+							+ comboBoxPlatas.getSelectedItem().toString().substring(1,2) + " de pureza "
+							+ comboBoxPlatas.getSelectedItem().toString().substring(3,7) + "%.\n" + "\n" + "Tercer puesto para "
 							+ comboBoxPuesto3.getSelectedItem().toString().split("\\|")[1] + " ("
 							+ comboBoxPuesto3.getSelectedItem().toString().split("\\|")[2] + ")," + " con un tiempo de "
 							+ temp3.toString() + "." + " Se le otorga el bronce "
-							+ comboBoxBronces.getSelectedItem().toString() + " de pureza "
-							+ comboBoxBronces.getSelectedItem().toString() + "%.\n" + "\n Resultado (idResultado)"
+							+ comboBoxBronces.getSelectedItem().toString().substring(1,2) + " de pureza "
+							+ comboBoxBronces.getSelectedItem().toString().substring(3,7) + "%.\n" + "\n Resultado (idResultado)"
 							+ " cerrado a las " + LocalDateTime.now().format(formatter1) + " del dia "
 							+ LocalDateTime.now().format(formatter2);
 					File archivo = new File("resultado_prueba" + textField.getText() + ".txt");
@@ -451,9 +455,15 @@ public class CerrarPrueba extends JFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+				} else {
+					System.out.println("Datos no validos");
 				}
 				if (chckbxDefinitivo.isSelected()) {
-					// Metodo para introducir en la base de datos el resultado
+					Oro oro = new Oro(Long.parseLong(comboBoxOros.getSelectedItem().toString().substring(1,2)), Float.parseFloat(comboBoxOros.getSelectedItem().toString().substring(3,7)));
+					Plata plata = new Plata(Long.parseLong(comboBoxPlatas.getSelectedItem().toString().substring(1,2)), Float.parseFloat(comboBoxPlatas.getSelectedItem().toString().substring(3,7)));
+					Bronce bronce =	new Bronce(Long.parseLong(comboBoxBronces.getSelectedItem().toString().substring(1,2)), Float.parseFloat(comboBoxBronces.getSelectedItem().toString().substring(3,7)));
+					Resultado result = new Resultado(oro,plata,bronce,true,LocalDateTime.now());
+					
 				}
 			}
 		});
