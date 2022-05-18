@@ -55,4 +55,19 @@ public class Tiempo {
 		return horas+":"+minutos+":"+segundos+","+centesimas;
 	}
 	
+	public int compareTo(Tiempo o) {
+		int ret = 0;
+		ret = Integer.compare(this.getHoras(), o.getHoras());
+		if (ret == 0) {
+			ret = Integer.compare(this.getMinutos(), o.getMinutos());
+			if (ret == 0) {
+				ret = Integer.compare(this.getSegundos(), o.getSegundos());
+				if (ret == 0) {
+					ret = Integer.compare(this.getCentesimas(), o.getCentesimas());
+				}
+			}
+		}
+
+		return ret;
+	}
 }
