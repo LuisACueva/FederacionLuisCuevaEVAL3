@@ -12,6 +12,7 @@ public class Resultado {
 	private boolean definitivo = false;
 	private LocalDateTime fechahora;
 	private Participante[] podio = new Participante[3];
+	private Long[] idpodio = new Long[3];
 	// podio[0] -> primer puesto
 	// podio[1] -> segundo puesto
 	// podio[2] -> tercer puesto
@@ -24,17 +25,22 @@ public class Resultado {
 		this.bronce = bronce;
 	}
 
-	
-	
-	public Resultado(Oro oro, Plata plata, Bronce bronce, boolean definitivo, LocalDateTime fechahora) {
+	public Resultado(Oro oro, Plata plata, Bronce bronce, boolean definitivo, LocalDateTime fechahora, Long[] idpodio) {
 		this.oro = oro;
 		this.plata = plata;
 		this.bronce = bronce;
 		this.definitivo = definitivo;
 		this.fechahora = fechahora;
+		this.idpodio = idpodio;
 	}
 
+	public Long[] getIdpodio() {
+		return idpodio;
+	}
 
+	public void setIdpodio(Long[] idpodio) {
+		this.idpodio = idpodio;
+	}
 
 	public long getId() {
 		return id;

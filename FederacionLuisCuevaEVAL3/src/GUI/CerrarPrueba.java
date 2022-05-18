@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
 import DAO.AtletaDAO;
+import DAO.DAOresultados;
 import DAO.MetalDAO;
 import DAO.PatrocinadorDAO;
 import DAO.PruebaDAO;
@@ -459,10 +460,17 @@ public class CerrarPrueba extends JFrame {
 					System.out.println("Datos no validos");
 				}
 				if (chckbxDefinitivo.isSelected()) {
+					Long[] podio = new Long[3];
+					podio[0] = Long.parseLong(comboBoxPuesto1.getSelectedItem().toString().split("\\|")[1]);
+					podio[1] = Long.parseLong(comboBoxPuesto2.getSelectedItem().toString().split("\\|")[1]);
+					podio[2] = Long.parseLong(comboBoxPuesto3.getSelectedItem().toString().split("\\|")[1]);
 					Oro oro = new Oro(Long.parseLong(comboBoxOros.getSelectedItem().toString().substring(1,2)), Float.parseFloat(comboBoxOros.getSelectedItem().toString().substring(3,7)));
 					Plata plata = new Plata(Long.parseLong(comboBoxPlatas.getSelectedItem().toString().substring(1,2)), Float.parseFloat(comboBoxPlatas.getSelectedItem().toString().substring(3,7)));
 					Bronce bronce =	new Bronce(Long.parseLong(comboBoxBronces.getSelectedItem().toString().substring(1,2)), Float.parseFloat(comboBoxBronces.getSelectedItem().toString().substring(3,7)));
-					Resultado result = new Resultado(oro,plata,bronce,true,LocalDateTime.now());
+					Resultado result = new Resultado(oro,plata,bronce,true,LocalDateTime.now(),podio);
+					
+					DAOresultados daoresult = new DAOresultados(ConexBD.establecerConexion());
+					daoresult.insertarSinID(result);
 					
 				}
 			}
