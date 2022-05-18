@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.util.Date;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.*;
@@ -23,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.awt.event.ActionEvent;
 import javax.swing.event.CaretListener;
 
@@ -173,8 +175,16 @@ public class NuevaPersona extends JFrame {
 
 		JComboBox comboBox = new JComboBox();
 		DAOequipo daoe = new DAOequipo(ConexBD.establecerConexion());
-		String[] equiposArray = (String[]) daoe.buscarTodos().toArray();
-		comboBox.setModel(new DefaultComboBoxModel(equiposArray));
+		/*
+		 * ARREGLAR
+		 * 
+		 * String[] equiposArray = (String[]) daoe.buscarTodos().toArray();
+		 */
+		/*
+		 * ARREGLAR
+		 * 
+		 * comboBox.setModel(new DefaultComboBoxModel(equiposArray));
+		 */
 		comboBox.setBounds(86, 371, 208, 22);
 		contentPane.add(comboBox);
 
@@ -205,7 +215,10 @@ public class NuevaPersona extends JFrame {
 				String nom = textFieldNombre.getText();
 				String doc = textNieNif.getSelectedText();
 				String tel = textTelefono.getText();
-				LocalDate nac = (LocalDate) spinnerNacimiento.getValue();
+				
+				 
+				java.util.Date nac = (java.util.Date) spinnerNacimiento.getValue();
+				 
 				DatosPersona persona = new DatosPersona();
 				float altura = Float.parseFloat(textAltura.getText());
 				float peso = Float.parseFloat(textPeso.getText());
@@ -242,7 +255,7 @@ public class NuevaPersona extends JFrame {
 						valid++;
 					}
 				}
-				persona.setFechaNac(nac);
+				persona.setFechaNac(LocalDate.of(nac.getYear() + 1900, nac.getMonth() + 1, nac.getDate()));
 				atl.setPersona(persona);
 				
 				if (valid == 5) {
