@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.border.TitledBorder;
 
 import DAO.AtletaDAO;
+import DAO.MetalDAO;
 import DAO.PatrocinadorDAO;
 import DAO.PruebaDAO;
 
@@ -359,15 +360,16 @@ public class CerrarPrueba extends JFrame {
 		lblIdBronce.setBounds(79, 454, 57, 14);
 		contentPane.add(lblIdBronce);
 		
-		JComboBox comboBoxOros = new JComboBox();
+		MetalDAO mdao = new MetalDAO(ConexBD.establecerConexion());
+		JComboBox comboBoxOros = new JComboBox(new DefaultComboBoxModel(mdao.buscarLibre("oro").toArray()));
 		comboBoxOros.setBounds(140, 281, 97, 22);
 		contentPane.add(comboBoxOros);
 		
-		JComboBox comboBoxPlatas = new JComboBox();
+		JComboBox comboBoxPlatas = new JComboBox(new DefaultComboBoxModel(mdao.buscarLibre("plata").toArray()));
 		comboBoxPlatas.setBounds(140, 365, 97, 22);
 		contentPane.add(comboBoxPlatas);
 		
-		JComboBox comboBoxBronces = new JComboBox();
+		JComboBox comboBoxBronces = new JComboBox(new DefaultComboBoxModel(mdao.buscarLibre("bronce").toArray()));
 		comboBoxBronces.setBounds(140, 450, 97, 22);
 		contentPane.add(comboBoxBronces);
 		
