@@ -138,7 +138,7 @@ public class MetalDAO implements operacionesCRUD<Metal> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return ret;
 	}
 	
 	@Override
