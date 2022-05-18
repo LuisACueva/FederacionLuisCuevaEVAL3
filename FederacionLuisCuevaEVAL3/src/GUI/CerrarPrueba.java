@@ -34,7 +34,16 @@ import utils.ConexBD;
 import validaciones.Validaciones;
 
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
@@ -225,101 +234,6 @@ public class CerrarPrueba extends JFrame {
 		spinnerFecha.setModel(new SpinnerDateModel(hoyMas1Mes, hoyMas1Mes, null, Calendar.DAY_OF_YEAR));
 
 		JButton buttonAceptar = new JButton("Aceptar");
-		buttonAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				boolean valido = false;
-				String titulo = "";
-				String msj = "";
-				String errores = "";
-				/// Tomar cada campo y validarlo. Si alguno no es correcto, avisar al usuario
-//				String nombre = textFieldNombre.getText();
-//				valido = Validaciones.validarNombrePrueba(nombre);
-//				if (!valido) {
-//					errores += "El nombre de la prueba no es válido (5-150 caracteres).\n";
-//					lblNombre.setForeground(Color.RED);
-//				} else
-//					nueva.setNombre(nombre);
-//				valido = false;
-//
-//				java.util.Date fecha = (java.util.Date) spinnerFecha.getValue();
-//				valido = Validaciones.validarFechaNuevaPrueba(fecha);
-//				if (!valido) {
-//					errores += "La fecha de la prueba no es válido (posterior a 1 mes desde hoy).\n";
-//					lblFecha.setForeground(Color.RED);
-//				} else {
-//					LocalDate fechaLD = LocalDate.of(fecha.getYear() + 1900, fecha.getMonth() + 1, fecha.getDate());
-//					nueva.setFecha(fechaLD);
-//				}
-//				valido = false;
-//				valido = (comboBoxLugar.getSelectedIndex() != -1);
-//				if (!valido) {
-//					errores += "Debe seleccionar el lugar de celebración de la nueva prueba.\n";
-//					lblLugar.setForeground(Color.RED);
-//				} else {
-//					Lugar lugar = (Lugar) comboBoxLugar.getSelectedItem();
-//					nueva.setLugar(lugar);
-//				}
-//				valido = false;
-//				valido = !(!rbIndividual.isSelected() && !rbEquipos.isSelected())
-//						|| (rbIndividual.isSelected() && rbEquipos.isSelected());
-//				if (!valido) {
-//					errores += "Debe seleccionar si la nueva prueba es individual O por equipos.\n";
-//					rbIndividual.setForeground(Color.RED);
-//					rbEquipos.setForeground(Color.RED);
-//				} else {
-//					nueva.setIndividual(rbIndividual.isSelected() ? true : false);
-//				}
-//				valido = false;
-//				valido = (comboBoxPatrocinador.getSelectedIndex() != -1);
-//				if (!valido) {
-//					errores += "Debe seleccionar el Patrocinador de la nueva prueba.\n";
-//					lblPatrocinador.setForeground(Color.RED);
-//				} else {
-//					PatrocinadorDAO patDAO = new PatrocinadorDAO(ConexBD.getCon());
-//					String seleccionado = (String) comboBoxPatrocinador.getSelectedItem();
-//					String[] aux = seleccionado.split("\\.");
-//					long idPat = Long.valueOf(aux[0]);
-//					Patrocinador patrocinador = patDAO.buscarPorID(idPat);
-//					ConexBD.cerrarConexion();
-//					if (patrocinador == null)
-//						valido = false;
-//					else
-//						nueva.setPatrocinador(patrocinador);
-//				}
-				
-				
-				
-				valido = errores.isEmpty();
-
-				if (!valido) {
-					titulo = "ERROR: Campos inválidos";
-					msj = "ERROR: los siguientes campos NO son válidos:\n\n";
-					if (!errores.isEmpty())
-						msj += errores + "\n";
-					JOptionPane.showMessageDialog(null, msj, titulo, JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-				/// Si todos los datos son correctos, llamar a PruebaDAO para insertar en la BD
-				PruebaDAO pruebadao = new PruebaDAO(ConexBD.establecerConexion());
-				boolean correcto = pruebadao.modificar(prueba);
-				/// Tanto si la inserción de la nueva prueba tiene éxito como si no, avisar al
-				/// usuario
-				if (!correcto) {
-					// hubo error al insertar en BD y no se generó la nueva prueba
-					titulo = "ERROR al cerrar la Prueba en la BD";
-					msj = "Hubo un error y NO se ha cerrado la prueba en la BD.";
-					JOptionPane.showMessageDialog(null, msj, titulo, JOptionPane.ERROR_MESSAGE);
-				} else {
-					titulo = "Prueba "+prueba.getId()+" cerrada en la BD";
-					msj = "Se ha cerrado correctamente la  prueba:\n" + prueba.toString();
-					JOptionPane.showMessageDialog(null, msj, titulo, JOptionPane.INFORMATION_MESSAGE);
-					/// Aqui se redirigiría al usuario hacia la pantalla principal
-					/// TODO
-				}
-			}
-		});
 		buttonAceptar.setBounds(233, 478, 89, 23);
 		contentPane.add(buttonAceptar);
 
@@ -385,11 +299,6 @@ public class CerrarPrueba extends JFrame {
 		lblHoras_3.setBounds(37, 419, 46, 14);
 		contentPane.add(lblHoras_3);
 		
-		JSpinner spinnerH1 = new JSpinner();
-		lblHoras_1.setLabelFor(spinnerH1);
-		spinnerH1.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		spinnerH1.setBounds(73, 249, 41, 20);
-		contentPane.add(spinnerH1);
 		
 		JLabel lblMinutos_1 = new JLabel("Minutos:");
 		lblMinutos_1.setBounds(124, 249, 46, 14);
@@ -480,6 +389,42 @@ public class CerrarPrueba extends JFrame {
 		JSpinner spinnerC3 = new JSpinner();
 		spinnerC3.setBounds(386, 419, 41, 20);
 		contentPane.add(spinnerC3);
+		
+		JSpinner spinnerH1 = new JSpinner();
+		spinnerH1.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spinnerH1.setBounds(73, 249, 41, 20);
+		contentPane.add(spinnerH1);
+		
+		buttonAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("hh:mm:ss");
+				DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				String impresion = "Resultado de la prueba "+textField.getText()+" \""+textFieldNombre.getText()+"\" celebrada el pasado "+
+						spinnerFecha.getToolTipText()+" en "+comboBoxLugar.getSelectedItem().toString()+"."+"\n"+
+						"\n"+"Primer puesto para "+comboBoxPuesto1.getSelectedItem().toString().split("\\|")[1]+
+						" ("+comboBoxPuesto1.getSelectedItem().toString().split("\\|")[2]+"),"+" con un tiempo de "+spinnerH1.getValue()+"."+
+						" Se le otorga el oro "+comboBoxOros.getSelectedItem().toString()+" de pureza "+comboBoxOros.getSelectedItem().toString()+"%.\n"+
+						"\n"+"Segundo puesto para "+comboBoxPuesto2.getSelectedItem().toString().split("\\|")[1]+
+						" ("+comboBoxPuesto2.getSelectedItem().toString().split("\\|")[2]+"),"+" con un tiempo de "+spinnerH2.getValue()+"."+
+						" Se le otorga la plata "+comboBoxPlatas.getSelectedItem().toString()+" de pureza "+comboBoxPlatas.getSelectedItem().toString()+"%.\n"+
+						"\n"+"Tercer puesto para "+comboBoxPuesto3.getSelectedItem().toString().split("\\|")[1]+
+						" ("+comboBoxPuesto3.getSelectedItem().toString().split("\\|")[2]+"),"+" con un tiempo de "+spinnerH3.getValue()+"."+
+						" Se le otorga el bronce "+comboBoxBronces.getSelectedItem().toString()+" de pureza "+comboBoxBronces.getSelectedItem().toString()+"%.\n"+
+						"\n Resultado (idResultado)"+" cerrado a las "+LocalDateTime.now().format(formatter1)+" del dia "+LocalDateTime.now().format(formatter2);
+				File archivo = new File ("resultado_prueba"+textField.getText()+".txt");
+				try {
+					FileWriter fr = new FileWriter(archivo);
+					PrintWriter pw = new PrintWriter(fr);
+					pw.print(impresion);
+					System.out.println("Se ha impreso");
+					fr.close();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 
 	}
 }
