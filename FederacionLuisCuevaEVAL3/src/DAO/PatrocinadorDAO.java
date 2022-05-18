@@ -157,7 +157,7 @@ public class PatrocinadorDAO implements operacionesCRUD<Patrocinador> {
 		return ret;
 	}
 
-	//@Override
+	
 	public Collection<Patrocinador> buscarTodos() {
 		List<Patrocinador> ret = new ArrayList<Patrocinador>();
 		Connection conex = ConexBD.establecerConexion();
@@ -190,13 +190,13 @@ public class PatrocinadorDAO implements operacionesCRUD<Patrocinador> {
 		return ret;
 	}
 
-	//@Override
+	
 	public boolean modificar(Patrocinador elemento) {
 		// TODO Esbozo de método generado automáticamente
 		return false;
 	}
 
-	//@Override
+	
 	public boolean eliminar(Patrocinador elemento) {
 		// TODO Esbozo de método generado automáticamente
 		return false;
@@ -208,7 +208,7 @@ public class PatrocinadorDAO implements operacionesCRUD<Patrocinador> {
 	 * 
 	 * @return
 	 */
-	/*public Patrocinador seleccionarUnoYaExistente() {
+	public Patrocinador seleccionarUnoYaExistente() {
 		Patrocinador ret = null;
 		List<Patrocinador> todos = (List<Patrocinador>) buscarTodos();
 		if (todos.size() == 0) {
@@ -242,5 +242,5 @@ public class PatrocinadorDAO implements operacionesCRUD<Patrocinador> {
 		} while (!correcto);
 
 		return ret;
-	}*/
+	}
 }

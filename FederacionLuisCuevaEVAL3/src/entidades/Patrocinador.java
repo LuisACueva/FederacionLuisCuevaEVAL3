@@ -1,60 +1,53 @@
 package entidades;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collection;
+import java.io.Serializable;
+import java.time.temporal.ChronoUnit;
+import java.util.Scanner;
+import utils.*;
+import validaciones.Validaciones;
 
-import utils.ConexBD;
-import utils.Datos;
-
-public class Patrocinador implements operacionesCRUD<Patrocinador>{
-
+///Examen 10 ejercicio 0
+public class Patrocinador implements Comparable<Patrocinador>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6508415087938400684L;
 	private long id;
+	/*
+	 * nombre: cadena de caracteres de entre 3 y 150 caracteres, siendo válidos los
+	 * alfabéticos (letras) o numéricos (dígitos) solamente
+	 */
 	private String nombre;
+	/*
+	 * web: URL con la cadena de caracteres de la web del patrocinador (si la hay).
+	 */
 	private String web;
+	/*
+	 * dotacion: valor de la dotación en euros que realiza para patrocinar la/s
+	 * prueba/s. Es obligatorio
+	 */
 	private double dotacion;
-
-	private Collection<Prueba> pruebas;
 	private Responsable responsable;
-	
+
 	public Patrocinador() {
-		
 	}
-	
-	public Patrocinador(long id, String nom, double dot, String web, long idR, String tlfR, LocalTime ltIR, LocalTime ltFR, DatosPersona dp) {
+
+	public Patrocinador(Patrocinador p) {
+		super();
+		this.id = p.id;
+		this.nombre = p.nombre;
+		this.web = p.web;
+		this.dotacion = p.dotacion;
+		this.responsable = p.responsable;
+	}
+
+	public Patrocinador(long id, String nombre, String web, double dotacion, Responsable r) {
+		super();
 		this.id = id;
-		this.nombre = nom;
-		this.dotacion = dot;
+		this.nombre = nombre;
 		this.web = web;
-		this.responsable.setId(idR);
-		this.responsable.setTelefonoProf(tlfR);
-		this.responsable.setHorarioIni(ltIR);
-		this.responsable.setHorarioIni(ltFR);
-		this.responsable.setPersona(dp);;
-	}
-	
-	public Patrocinador(long id, String nom, String web, double dot, DatosPersona dp) {
-		
-	}
-
-	public Responsable getResponsable() {
-		return responsable;
-	}
-
-	public void setResponsable(Responsable responsable) {
-		this.responsable = responsable;
-	}
-
-	public Collection<Prueba> getPruebas() {
-		return pruebas;
-	}
-
-	public void setPruebas(Collection<Prueba> pruebas) {
-		this.pruebas = pruebas;
+		this.dotacion = dotacion;
+		this.responsable = r;
 	}
 
 	public long getId() {
@@ -89,79 +82,131 @@ public class Patrocinador implements operacionesCRUD<Patrocinador>{
 		this.dotacion = dotacion;
 	}
 
-	public String mostrarBasico() {
-		return "";
+	public Responsable getResponsable() {
+		return responsable;
 	}
 
-	public String mostrarCompleto() {
-		return "";
+	public void setResponsable(Responsable responsable) {
+		this.responsable = responsable;
 	}
 
-	public String data() {
-		return "" + this.getId() + "|" + this.getResponsable().getId() + "|" + this.getNombre() + "|"
-				+ this.getDotacion() + "|" + this.getWeb();
-	}
+	/// Examen 10 ejercicio 2
+	public static Patrocinador nuevoPatrocinador() {
+		Patrocinador ret = null;
+		Scanner in = new Scanner(System.in);
+		boolean valido = false;
+		long id = 0;
+		String nombre = "";
+		String web = "";
+		double dotacion = 0.0;
 
-	@Override
-	public boolean insertarConID(Patrocinador elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		do {
+			System.out.println(
+					"Introduzca el nombre del nuevo patrocinador (entre 3 y 150 caracteres alfabéticos o numéricos solamente):");
+			nombre = in.nextLine();
+			valido = Validaciones.validarNombrePatrocinador(nombre);
+			if (!valido) {
+				System.out.println(
+						"El valor introducido para el nombre del patrocinador (debe ser  entre 3 y 150 caracteres alfabéticos o numéricos solamente):");
+				continue;
+			} else
+				valido = true;
+		} while (!valido);
+		valido = false;
 
-	@Override
-	public long insertarSinID(Patrocinador elemento) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Patrocinador buscarPorID(long id) {
-		Connection conex = null;
-		Statement consulta = null;
-		ResultSet resultado = null;
-		try {
-			conex = ConexBD.establecerConexion();
-			String consultaStr = "SELECT * FROM patrocinadores FULL OUTER JOIN personas WHERE id ="+ id;
-			if (conex == null)
-				conex = ConexBD.getCon();
-			consulta = conex.createStatement();
-			resultado = consulta.executeQuery(consultaStr);
-			while (resultado.next()) {
-				int idP = resultado.getInt(1);
-				String nombre = resultado.getString(2);
-				String web = resultado.getString(3);
-				double dotacion = resultado.getDouble(4);
-				long idPe = resultado.getInt(5);
-				String nombreP = resultado.getString(6);
-				String telefono = resultado.getString(7);
-				String nifnie = resultado.getString(8);
-				
-				Documentacion doc = new NIE(nifnie);
-				if(doc.validar()) {
-					doc = new NIE(nifnie);
-				}else {
-					doc = new NIF(nifnie);
-				}
-				return new Patrocinador(idP, nombre, web, dotacion, new DatosPersona(idP, nombre, telefono, doc));
-			}
-		} catch (SQLException e) {
-			System.out.println("Se ha producido una Excepcion:" + e.getMessage());
-			e.printStackTrace();
-		} finally {
-			try {
-				System.out.println("Cerrando recursos...");
-				if (resultado != null)
-					resultado.close();
-				if (consulta != null)
-					consulta.close();
-				if (conex != null)
-					conex.close();
-			} catch (SQLException e) {
-				System.out.println("Se ha producido una Excepcion:" + e.getMessage());
-				e.printStackTrace();
-			}
+		System.out.println("¿Desea introducir la url de la web del nuevo patrocinador?");
+		boolean confirmacion = Utilidades.leerBoolean();
+		if (confirmacion) {
+			do {
+				System.out.println(
+						"Introduzca la URL de la web del nuevo patrocinador (entre 3 y 150 caracteres alfabéticos o numéricos solamente):");
+				web = in.nextLine();
+				valido = Validaciones.validarWebPatrocinador(web);
+				if (!valido) {
+					System.out.println("El valor introducido para la web del patrocinador es inválido.");
+					continue;
+				} else
+					valido = true;
+			} while (!valido);
 		}
-		return null;
+		valido = false;
+		do {
+			System.out.println("Introduzca la dotacion en euros del nuevo patrocinador:");
+			dotacion = Utilidades.leerDouble();
+			valido = Validaciones.validarDotacion(dotacion);
+			if (!valido) {
+				System.out.println("El valor introducido para la dotacion no es correcta (debe ser mayor que 100):");
+				continue;
+			} else
+				valido = true;
+		} while (!valido);
+
+		System.out.println("Introduzca los datos del responsable del nuevo patrocinador:");
+		Responsable responsable = Responsable.nuevoResponsable();
+		ret = new Patrocinador(id, nombre, web, dotacion, responsable);
+		return ret;
 	}
-		
+
+	/// Examen 10 ejercicio 3C
+	/***
+	 * Funcion que devuelve una cadena de caracteres con los datos básicos de un
+	 * patrocinador: idPatrocinador + nombre + web (si la hay).
+	 * 
+	 * @return la cadena formateada
+	 */
+	public String mostrarBasico() {
+		String ret = "";
+		ret += this.id + ". " + this.nombre + (!this.web.equals("") ? " " + web : " ");
+		return ret;
+	}
+
+	/// Examen 10 ejercicio 3C
+	/**
+	 * Funcion que devuelve una cadena de caracteres con los datos de un
+	 * patrocinador al completo: idPatrocinador + nombre + web (si la hay) +
+	 * dotación en euros (xx.xx euros) + los datos del responsable
+	 */
+	public String mostrarCompleto() {
+		String ret = mostrarBasico();
+		ret += Utilidades.mostrarDouble2Decimales(dotacion) + "euros aportados\t";
+		ret += "Responsable: " + this.responsable.toString();
+		return ret;
+	}
+
+	/// Examen 10 Ejercicio 5
+	@Override
+	public int compareTo(Patrocinador o) {
+		/// El primer criterio de ordenación es la cantidad datada por el Patrocinador
+		int comparar1 = Double.compare(this.dotacion, o.dotacion);
+		if (comparar1 == 0) {
+			/// Si hay un primer empate (misma dotacion), se desempata por el rango horario
+			long rangoThis = ChronoUnit.MINUTES.between(this.getResponsable().getHorarioFin(),
+					this.getResponsable().getHorarioIni());
+			long rangoO = ChronoUnit.MINUTES.between(o.getResponsable().getHorarioFin(),
+					o.getResponsable().getHorarioIni());
+			int comparar2 = Long.compare(rangoThis, rangoO);
+			if (comparar2 == 0) {
+				/// Si se tiene el mismo rango horario para los 2 Patrocinadores, se desempata
+				/// por su IDPatrocinador
+				return Long.compare(this.getId(), o.getId());
+			} else
+				return comparar2;
+		} else
+			return comparar1;
+	}
+
+	/// Examen 10 Ejercicio 8A
+	/***
+	 * funcion que devuelve una cadena de caracteres de la forma siguiente:
+	 * <idPatrocinador> | <idRepresentante> | <nombre> | <dotacion> | <web>
+	 * 
+	 * @return
+	 */
+	public String data() {
+		String ret = "";
+		ret += "" + this.getId() + "|" + this.getResponsable().getId() + "|" + this.getNombre() + "|"
+				+ this.getDotacion() + "|" + this.getWeb();
+		return ret;
+	}
+
 }
